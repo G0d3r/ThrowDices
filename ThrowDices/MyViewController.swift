@@ -44,7 +44,7 @@ class MyViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Roll Dices", style: .plain, target: self, action: #selector(handleRollDices))
         
         
@@ -76,14 +76,33 @@ class MyViewController: UIViewController
         
         let blueValue = arc4random_uniform(6) + 1
         blueLabel.text = "\(blueValue)"
-        
+                
         evalueateWinner()
+        
     }
     
     fileprivate func evalueateWinner()
     {
         winnerLabel.text = "Figuring out who won..."
+        //Basically here is a check for all valid values
+        guard let redText = redLabel.text, let blueText = blueLabel.text else
+        {
+            //Prompt error when values are invalid
+            winnerLabel.text = "Values are invalid"
+            return
+        }
+        
+        //Values are all good to go, perform the next bit of logic
+        if redText == blueText
+        {
+            winnerLabel.text = "Tie"
+        } else if redText > blueText
+        {
+            winnerLabel.text = "Red won"
+        } else
+        {
+            winnerLabel.text = "Blue won"
+        }
+        
     }
 }
-
-
